@@ -31,6 +31,16 @@ subscribe(Pid) ->
     {error, timeout}
   end.
 
+add_event(Name, Description, TimeOut) ->
+  Ref = make_ref(),
+  ?MODULE ! {self(), Ref, {add, Name, Description, TimeOut}},
+
+  receive
+    {Ref, Msg} -> Msg
+  after 5000 ->
+    {error, timeout}
+  end.
+
 loop(S = #state{}) ->
   receive
     {Pid, MsgRef, {subscribe, Client}} ->
