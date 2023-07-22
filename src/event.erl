@@ -3,7 +3,7 @@
 
 -record(state, {server,
                 name="",
-                to_go=0}).
+                to_go=[]}).
 
 start(EventName, DateTime) ->
   spawn(?MODULE, init, [self(), EventName, DateTime]).
